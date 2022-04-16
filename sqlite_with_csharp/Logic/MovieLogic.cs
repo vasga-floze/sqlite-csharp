@@ -116,5 +116,28 @@ namespace sqlite_with_csharp.Logic
             }
             return response;
         }
+
+        //metodo para eliminar un registro
+        public bool Delete(Movie obj)
+        {
+            bool response = true;
+
+            using (SQLiteConnection connection = new SQLiteConnection(connString))
+            {
+                connection.Open();
+                string query = "DELETE FROM movies WHERE id = @id";
+
+                SQLiteCommand cmd = new SQLiteCommand(query, connection);
+                cmd.Parameters.Add(new SQLiteParameter("@id", obj.id));
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                //validar si la ejecucion ha sido completada
+                if (cmd.ExecuteNonQuery() < 1)
+                {
+                    response = false;
+                }
+            }
+            return response;
+        }
     }
 }

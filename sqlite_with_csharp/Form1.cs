@@ -22,7 +22,8 @@ namespace sqlite_with_csharp
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Movie item = new Movie() {
+            Movie item = new Movie()
+            {
                 //id = txt_Id.Text, //El id solo se usa cuando se va a editar o eliminar
                 movie_tittle = txtTittle.Text,
                 movie_genre = txtGenre.Text
@@ -71,6 +72,24 @@ namespace sqlite_with_csharp
 
             //se pasan los parametros a la funcion de editar
             bool response = MovieLogic.Instance.Update(item);
+
+            //si es verdadero se llama al metodo de mostrar
+            if (response)
+            {
+                clean(); //limpia los campos
+                show_movies();
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            Movie item = new Movie()
+            {
+                id = int.Parse(txt_Id.Text)
+            };
+
+            //se pasan los parametros a la funcion de eliminar
+            bool response = MovieLogic.Instance.Delete(item);
 
             //si es verdadero se llama al metodo de mostrar
             if (response)
