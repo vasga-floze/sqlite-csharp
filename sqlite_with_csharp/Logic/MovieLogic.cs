@@ -91,5 +91,30 @@ namespace sqlite_with_csharp.Logic
             }
 
         }
+
+        //crear metodo para editar|actualizar datos
+        public bool Update(Movie obj)
+        {
+            bool response = true;
+
+            using (SQLiteConnection connection = new SQLiteConnection(connString))
+            {
+                connection.Open();
+                string query = "update movies set movie_tittle = @movie_tittle,  movie_genre = @movie_genre WHERE id = @id";
+
+                SQLiteCommand cmd = new SQLiteCommand(query, connection);
+                cmd.Parameters.Add(new SQLiteParameter("@id", obj.id));
+                cmd.Parameters.Add(new SQLiteParameter("@movie_tittle", obj.movie_tittle));
+                cmd.Parameters.Add(new SQLiteParameter("@movie_genre", obj.movie_genre));
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                //validar si la ejecucion ha sido completada
+                if (cmd.ExecuteNonQuery() < 1)
+                {
+                    response = false;
+                }
+            }
+            return response;
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 namespace sqlite_with_csharp
 {
-    partial class Form1
+    partial class frmInitial
     {
         /// <summary>
         /// Required designer variable.
@@ -109,6 +109,7 @@ namespace sqlite_with_csharp
             this.btnUpdate.TabIndex = 7;
             this.btnUpdate.Text = "Editar";
             this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // btnDelete
             // 
@@ -139,7 +140,7 @@ namespace sqlite_with_csharp
             this.label1.TabIndex = 10;
             this.label1.Text = "PELICULAS";
             // 
-            // Form1
+            // frmInitial
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -155,7 +156,8 @@ namespace sqlite_with_csharp
             this.Controls.Add(this.lblGenre);
             this.Controls.Add(this.lblTittle);
             this.Controls.Add(this.lblId);
-            this.Name = "Form1";
+            this.Name = "frmInitial";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMovies)).EndInit();

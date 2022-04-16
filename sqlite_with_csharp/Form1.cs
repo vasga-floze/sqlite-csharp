@@ -13,9 +13,9 @@ using sqlite_with_csharp.Logic;
 
 namespace sqlite_with_csharp
 {
-    public partial class Form1 : Form
+    public partial class frmInitial : Form
     {
-        public Form1()
+        public frmInitial()
         {
             InitializeComponent();
         }
@@ -34,6 +34,7 @@ namespace sqlite_with_csharp
             //si es verdadero se llama al metodo
             if (response)
             {
+                clean(); //limpia los campos
                 show_movies();
             }
         }
@@ -41,13 +42,42 @@ namespace sqlite_with_csharp
         //metodo para limpiar datagrid y llamar a funcion que lista los registros
         public void show_movies()
         {
-            //dgvMovies.DataSource = null;
+            dgvMovies.DataSource = null;
             dgvMovies.DataSource = MovieLogic.Instance.getList();
+        }
+
+        //metodo para limpiar los textbox
+        public void clean()
+        {
+            txt_Id.Text = "";
+            txtTittle.Text = "";
+            txtGenre.Text = "";
+            txtTittle.Focus();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             show_movies();
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            Movie item = new Movie()
+            {
+                id = int.Parse(txt_Id.Text),
+                movie_tittle = txtTittle.Text,
+                movie_genre = txtGenre.Text
+            };
+
+            //se pasan los parametros a la funcion de editar
+            bool response = MovieLogic.Instance.Update(item);
+
+            //si es verdadero se llama al metodo de mostrar
+            if (response)
+            {
+                clean(); //limpia los campos
+                show_movies();
+            }
         }
     }
 }
