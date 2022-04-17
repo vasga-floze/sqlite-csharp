@@ -29,14 +29,22 @@ namespace sqlite_with_csharp
                 movie_genre = txtGenre.Text
             };
 
-            //se pasan los parametros a la funcion de guardar
-            bool response = MovieLogic.Instance.Save(item);
-
-            //si es verdadero se llama al metodo
-            if (response)
+            if (txt_Id.Text != string.Empty)
             {
-                clean(); //limpia los campos
-                show_movies();
+                const string message = "Para crear un nuevo registro esl campo de Id no se debe ingresar ya que es un campo autoincremental";
+                const string caption = "Información";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK ,MessageBoxIcon.Warning);
+            }
+            else
+            {
+                //se pasan los parametros a la funcion de guardar
+                bool response = MovieLogic.Instance.Save(item);
+                //si es verdadero se llama al metodo
+                if (response)
+                {
+                    clean(); //limpia los campos
+                    show_movies();
+                }
             }
         }
 
@@ -63,39 +71,61 @@ namespace sqlite_with_csharp
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            Movie item = new Movie()
-            {
-                id = int.Parse(txt_Id.Text),
-                movie_tittle = txtTittle.Text,
-                movie_genre = txtGenre.Text
-            };
 
-            //se pasan los parametros a la funcion de editar
-            bool response = MovieLogic.Instance.Update(item);
-
-            //si es verdadero se llama al metodo de mostrar
-            if (response)
+            if (txt_Id.Text == string.Empty)
             {
-                clean(); //limpia los campos
-                show_movies();
+                const string message = "Debe ingresar un Id para actualizar un registro";
+                const string caption = "Información";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                //se almacenan los valores
+                Movie item = new Movie()
+                {
+                    id = int.Parse(txt_Id.Text),
+                    movie_tittle = txtTittle.Text,
+                    movie_genre = txtGenre.Text
+                };
+
+                //se pasan los parametros a la funcion de editar
+                bool response = MovieLogic.Instance.Update(item);
+
+                //si es verdadero se llama al metodo de mostrar
+                if (response)
+                {
+                    clean(); //limpia los campos
+                    show_movies();
+                }
             }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            Movie item = new Movie()
+            
+            if (txt_Id.Text == string.Empty)
             {
-                id = int.Parse(txt_Id.Text)
-            };
-
-            //se pasan los parametros a la funcion de eliminar
-            bool response = MovieLogic.Instance.Delete(item);
-
-            //si es verdadero se llama al metodo de mostrar
-            if (response)
+                const string message = "Debe ingresar un Id para eliminarlo";
+                const string caption = "Información";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
             {
-                clean(); //limpia los campos
-                show_movies();
+                //se almacenan los valores
+                Movie item = new Movie()
+                {
+                    id = int.Parse(txt_Id.Text)
+                };
+
+                //se pasan los parametros a la funcion de eliminar
+                bool response = MovieLogic.Instance.Delete(item);
+
+                //si es verdadero se llama al metodo de mostrar
+                if (response)
+                {
+                    clean(); //limpia los campos
+                    show_movies();
+                }
             }
         }
     }
